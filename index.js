@@ -77,30 +77,31 @@ const contract = new ethers.Contract(contractAddress, erc721ABI, provider);
 const addTransaction = async (from, to , tokenId, event) => {
     let tokenURI;
     if(tokenId){
+        const tokenIdString = tokenId.toString()
         tokenURI = await contract.tokenURI(tokenId);
         //console.log("tokenURI", tokenURI);
         if (!contractOwnerBasedData[contractAddress + "-" + to]) {
             contractOwnerBasedData[contractAddress + "-" + to] = []
         }
-        contractOwnerBasedData[contractAddress + "-" + to].push({"owner": to, "tokenId": tokenId, "tokenURI" : tokenURI });
+        contractOwnerBasedData[contractAddress + "-" + to].push({"owner": to, "tokenId": tokenIdString, "tokenURI" : tokenURI });
         //console.log(contractOwnerBasedData);
 
         if(!tokenIdBasedData[contractAddress + "-" + tokenId]){
             tokenIdBasedData[contractAddress + "-" + tokenId] = []
         }
-        tokenIdBasedData[contractAddress + "-" + tokenId].push({"from" : from, "to" : to, "tokenId" : tokenId});
+        tokenIdBasedData[contractAddress + "-" + tokenId].push({"owner" : to, "tokenId" : tokenIdString , "tokenURI" : tokenURI});
         //console.log(tokenIdBasedData);
 
         if(!contractBasedData[contractAddress]){
             contractBasedData[contractAddress] = []
         }
-        contractBasedData[contractAddress].push({"from" : from, "to" : to, "tokenId" : tokenId});
+        contractBasedData[contractAddress].push({"owner" : to, "tokenId" : tokenIdString , "tokenURI" : tokenURI});
         //console.log(contractBasedData);
 
         if(!ownerBasedData[to]){
             ownerBasedData[to] = []
         }
-        ownerBasedData[to].push({"from" : from, "to" : to, "tokenId" : tokenId});
+        ownerBasedData[to].push({"owner" : to, "tokenId" : tokenIdString , "tokenURI" : tokenURI});
         //console.log(ownerBasedData);
     }
     
@@ -148,7 +149,7 @@ app.get('/', (req, res) => {
     res.send("Hello world");
 })
 app.get('/getAll/:address', (req, res) => {
-    console.log();
+    console.log(contractBasedData[req.params.address]);
     res.send(contractBasedData[req.params.address]);
 });
 
