@@ -3,8 +3,8 @@ const router = express.Router();
 
 const cacheController = require('../controllers/cacheController');
 
-router.get('/getAll/:address', cacheController.getAllNFTsbyContract);
+router.get('/getAll/:address', cacheController.getNFTsbyContract);
 router.get('/getAll/:address/:userWallet', cacheController.getNFTsByContractAndUser);
-router.post('/getWalletNFTs/:userWallet', cacheController.getNFTsByUser);
-
+router.get('/getWalletNFTs/:userWallet', cacheController.getNFTsByUser);
+router.post('/addContract', cacheController.addContract);
 module.exports = router;
