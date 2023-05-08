@@ -1,9 +1,8 @@
-
-
 const database = require('../DB/db');
 let contractOwnerBasedData = database.contractOwnerBasedData
 let contractBasedData = database.contractBasedData
 let ownerBasedData = database.ownerBasedData
+const subScribe = require('../utils').subScribe;
 exports.getNFTsbyContract = (req, res) => {
     console.log(contractBasedData[req.params.address]);
     res.send(contractBasedData[req.params.address]);
@@ -19,5 +18,7 @@ exports.getNFTsByUser = (req, res) => {
 
 exports.addContract = (req, res) => {
     contractAddress = req.body.address;
+    subScribe(contractAddress);
+    res.send("success");
 
 }
