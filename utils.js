@@ -37,6 +37,7 @@ exports.subScribe = async (contractAddress = "0x2ac3C692f8cd4e87Bd46Ddf471EAAe59
     events.forEach(async event => {
         handleTX(contract, contractAddress, event.args.to, event.args.tokenId, event);
     });
-    contract.on('Transfer', handleTX());
+    contract.on('Transfer', (from, to, tokenId, event) => {handleTX(contract, contractAddress, to, tokenId, event)});
 
 }
+
