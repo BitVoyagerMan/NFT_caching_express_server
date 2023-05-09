@@ -3,6 +3,7 @@ const express = require("express");
 const router = require('./routes/router.js');
 const { createClient } =require('redis');
 const bodyParser = require('body-parser');
+
 const client = createClient({
     password: process.env.REDIS_PASSWORD,
     socket: {
