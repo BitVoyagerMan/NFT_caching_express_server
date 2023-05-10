@@ -16,9 +16,9 @@ exports.getNFTsByUser = (req, res) => {
     res.send(ownerBasedData[req.params.userWallet]);
 };
 
-exports.addContract = (req, res) => {
+exports.addContract = async (req, res) => {
     contractAddress = req.body.address;
-    subScribe(contractAddress);
+    await subScribe(contractAddress);
     res.send("success");
 
 }
